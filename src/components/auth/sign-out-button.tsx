@@ -30,9 +30,9 @@ export const SignOutButton = () => {
       {isPending ? (
         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
       ) : (
-        <LogOut className="mr-2 h-4 w-4" />
+        <LogOut className="h-4 w-4" />
       )}
-      Sign out
+      {/* Sign out */}
     </Button>
   );
 };

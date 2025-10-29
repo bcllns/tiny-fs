@@ -4,7 +4,6 @@ import Link from "next/link";
 import { SignOutButton } from "@/components/auth/sign-out-button";
 import { FileUploader } from "@/components/dashboard/file-uploader";
 import { FilesTable, type FileRecord } from "@/components/dashboard/files-table";
-import { Button } from "@/components/ui/button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 import {
@@ -43,6 +42,14 @@ export default async function DashboardPage() {
     redirect("/sign-in?redirect=/dashboard");
   }
 
+  const rawMetadata = (user.user_metadata ?? {}) as Record<string, unknown>;
+  const displayName =
+    (typeof rawMetadata.full_name === "string" && rawMetadata.full_name.trim()) ||
+    (typeof rawMetadata.name === "string" && rawMetadata.name.trim()) ||
+    (typeof rawMetadata.display_name === "string" && rawMetadata.display_name.trim()) ||
+    user.email ||
+    "My account";
+
   const { data: filesData, error } = await supabase
     .from("files")
     .select(
@@ -76,10 +83,16 @@ export default async function DashboardPage() {
               Store, manage, and share files simpy and securely.
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <Button asChild variant="outline" className="border-[#e2d9ff] text-[#4c1d95] hover:bg-[#f5f0ff]">
-              <Link href="/">Home</Link>
-            </Button>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/account"
+              className="group flex flex-col items-end rounded-lg border border-transparent px-3 py-2 text-right transition-colors hover:border-[#e2d9ff] hover:bg-[#f5f0ff]"
+            >
+              <span className="text-sm font-semibold text-[#4c1d95] group-hover:text-[#3b2aa3]">
+                {displayName}
+              </span>
+              <span className="text-xs text-[#6b21a8] group-hover:text-[#4c1d95]">{user.email}</span>
+            </Link>
             <SignOutButton />
           </div>
         </header>
@@ -89,9 +102,6 @@ export default async function DashboardPage() {
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-[#4c1d95]">Your files</h2>
-            <p className="text-sm text-[#6b21a8]">
-              Signed in as <span className="font-medium">{user.email}</span>
-            </p>
           </div>
           <FilesTable
             files={files}

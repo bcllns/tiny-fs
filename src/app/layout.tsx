@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tiny Box",
-  description: "Share files securely with Supabase auth and storage.",
+  title: "Tiny FS",
+  description: "Share files easily and securely with Tiny FS.",
 };
 
 export default function RootLayout({

@@ -120,9 +120,9 @@ export const FilesTable = ({
               <td className="px-6 py-4">
                 <div className="flex flex-wrap items-center gap-2">
                   {file.is_public && file.public_url ? (
-                    <Button size="sm" variant="outline" asChild>
+                    <Button size="icon" variant="ghost" asChild>
                       <Link href={file.public_url} target="_blank" rel="noreferrer">
-                        <Download className="mr-2 h-4 w-4" /> Open
+                        <Download className="h-4 w-4" />
                       </Link>
                     </Button>
                   ) : null}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState, useTransition, type FormEvent } from "react";
-import { Copy, Loader2, Mail, RefreshCcw, Trash2 } from "lucide-react";
+import { Copy, Loader2, Mail, RefreshCcw, Trash2, Share } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -131,8 +131,8 @@ export const ShareDialog = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" variant="ghost" className="text-[#4c1d95] hover:bg-[#f5f0ff]">
-          Share
+        <Button size="icon" variant="ghost" className="text-[#4c1d95] hover:bg-[#f5f0ff]">
+          <Share className="h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-lg">
