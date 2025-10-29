@@ -243,6 +243,61 @@ export async function deleteShareLink(shareId: string) {
   revalidatePath("/dashboard");
 }
 
+export async function updateShareLink({
+  shareId,
+  neverExpire,
+}: {
+  shareId: string;
+  neverExpire?: boolean;
+}) {
+  const supabase = await createSupabaseServerClient();
+  const headerList = await headers();
+  const origin = headerList.get("origin");
+  const baseUrl = origin ?? process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("You must be signed in.");
+  }
+
+  // Get the existing share to preserve email and other data
+  const { data: existingShare, error: fetchError } = await supabase
+    .from("file_shares")
+    .select("token, share_email")
+    .eq("id", shareId)
+    .eq("owner_id", user.id)
+    .single();
+
+  if (fetchError || !existingShare) {
+    throw new Error(fetchError?.message ?? "Share link not found");
+  }
+
+  // Generate a new token to effectively refresh the expiration
+  const token = buildShareToken(nanoid(24), Boolean(neverExpire));
+
+  const { error: updateError } = await supabase
+    .from("file_shares")
+    .update({
+      token,
+      created_at: new Date().toISOString(), // Update creation time to reset expiration
+    })
+    .eq("id", shareId)
+    .eq("owner_id", user.id);
+
+  if (updateError) {
+    throw new Error(updateError.message);
+  }
+
+  revalidatePath("/dashboard");
+
+  return {
+    url: `${baseUrl}/share/${token}`,
+  };
+}
+
 export async function sendShareLinkEmail(shareId: string) {
   const supabase = await createSupabaseServerClient();
   const headerList = await headers();

@@ -14,6 +14,7 @@ import {
   createShareLink,
   deleteShareLink,
   sendShareLinkEmail,
+  updateShareLink,
 } from "./actions";
 
 type SupabaseFileRow = {
@@ -70,9 +71,9 @@ export default async function DashboardPage() {
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-10">
         <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
-            <h1 className="text-3xl font-semibold text-[#4c1d95]">Tiny Box</h1>
+            <h1 className="text-3xl font-semibold text-[#4c1d95]">Tiny FS</h1>
             <p className="text-sm text-[#6b21a8]">
-              Store, manage, and share files securely with Supabase Storage.
+              Store, manage, and share files simpy and securely.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -99,6 +100,7 @@ export default async function DashboardPage() {
             onCreateShare={createShareLink}
             onDeleteShare={deleteShareLink}
             onSendShareEmail={sendShareLinkEmail}
+            onUpdateShare={updateShareLink}
           />
         </section>
       </div>

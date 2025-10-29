@@ -49,8 +49,7 @@ export const FileUploader = ({ onUpload }: FileUploaderProps) => {
         </Label>
         <Input id="file" name="file" type="file" required disabled={isPending} />
         <p className="text-xs text-[#6b21a8]">
-          Files are stored securely in Supabase Storage. Maximum file size depends on your Supabase project
-          limits.
+          Maximum file size depends on your Supabase project 500mb.
         </p>
       </div>
       <div className="flex items-center justify-between rounded-lg bg-[#f5f0ff] px-4 py-3">

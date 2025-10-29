@@ -29,6 +29,7 @@ type FilesTableProps = {
   onCreateShare: (args: { fileId: string; shareEmail?: string; neverExpire?: boolean }) => Promise<{ url: string }>;
   onDeleteShare: (shareId: string) => Promise<void>;
   onSendShareEmail: (shareId: string) => Promise<void>;
+  onUpdateShare: (args: { shareId: string; neverExpire?: boolean }) => Promise<{ url: string }>;
 };
 
 export const FilesTable = ({
@@ -38,6 +39,7 @@ export const FilesTable = ({
   onCreateShare,
   onDeleteShare,
   onSendShareEmail,
+  onUpdateShare,
 }: FilesTableProps) => {
   const [isPending, startTransition] = useTransition();
   const [isDeleting, startDeleteTransition] = useTransition();
@@ -133,6 +135,7 @@ export const FilesTable = ({
                     onCreateShare={onCreateShare}
                     onDeleteShare={onDeleteShare}
                     onSendShareEmail={onSendShareEmail}
+                    onUpdateShare={onUpdateShare}
                   />
                   <Button
                     size="icon"

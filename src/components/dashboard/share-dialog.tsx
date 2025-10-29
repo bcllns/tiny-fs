@@ -27,6 +27,7 @@ type ShareDialogProps = {
   onCreateShare: (input: { fileId: string; shareEmail?: string; neverExpire?: boolean }) => Promise<{ url: string }>;
   onDeleteShare: (shareId: string) => Promise<void>;
   onSendShareEmail: (shareId: string) => Promise<void>;
+  onUpdateShare: (input: { shareId: string; neverExpire?: boolean }) => Promise<{ url: string }>;
 };
 
 export const ShareDialog = ({
@@ -38,6 +39,7 @@ export const ShareDialog = ({
   onCreateShare,
   onDeleteShare,
   onSendShareEmail,
+  onUpdateShare,
 }: ShareDialogProps) => {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -108,15 +110,15 @@ export const ShareDialog = ({
     setRenewingShareId(share.id);
     startRenewing(async () => {
       try {
-        const { url } = await onCreateShare({
-          fileId,
-          shareEmail: share.share_email ?? undefined,
+        const { url } = await onUpdateShare({
+          shareId: share.id,
+          neverExpire: isPermanentShareToken(share.token),
         });
         setGeneratedUrl(url);
-        toast.success("New share link created");
+        toast.success("Share link updated with new expiration");
       } catch (error) {
         const message =
-          error instanceof Error ? error.message : "Unable to create a new share link. Please try again.";
+          error instanceof Error ? error.message : "Unable to update share link. Please try again.";
         toast.error(message);
       } finally {
         setRenewingShareId(null);
@@ -269,12 +271,14 @@ export const ShareDialog = ({
                         </div>
                         <div className="flex items-center gap-1">
                           {expired ? (
+                            // For expired links, only show refresh and delete buttons
                             <Button
                               size="icon"
                               variant="ghost"
                               onClick={() => handleRenewShare(share)}
                               disabled={isRenewingCurrent}
                               className="text-[#2563eb] hover:bg-[#eff6ff]"
+                              title="Refresh expired link"
                             >
                               {isRenewingCurrent ? (
                                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -283,6 +287,7 @@ export const ShareDialog = ({
                               )}
                             </Button>
                           ) : (
+                            // For non-expired links, show copy, email, and optionally refresh buttons
                             <>
                               <Button size="icon" variant="ghost" onClick={() => handleCopy(urlToCopy)}>
                                 <Copy className="h-4 w-4" />
@@ -319,6 +324,22 @@ export const ShareDialog = ({
                                   <Mail className="h-4 w-4" />
                                 )}
                               </Button>
+                              {!shareNeverExpires && (
+                                <Button
+                                  size="icon"
+                                  variant="ghost"
+                                  onClick={() => handleRenewShare(share)}
+                                  disabled={isRenewingCurrent}
+                                  className="text-[#2563eb] hover:bg-[#eff6ff]"
+                                  title="Update expiration date"
+                                >
+                                  {isRenewingCurrent ? (
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                  ) : (
+                                    <RefreshCcw className="h-4 w-4" />
+                                  )}
+                                </Button>
+                              )}
                             </>
                           )}
                           <Button
