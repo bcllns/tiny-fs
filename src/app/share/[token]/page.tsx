@@ -11,6 +11,7 @@ import {
 } from "@/lib/share-links";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { createSupabaseServiceRoleClient } from "@/lib/supabase/service-role";
+import { CloudDownload } from "lucide-react";
 
 const STORAGE_BUCKET = "files";
 
@@ -115,11 +116,14 @@ export default async function SharePage({ params }: SharePageProps) {
     <main className="min-h-screen bg-white">
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-16">
         <div className="flex items-center justify-between">
-          <Button asChild variant="ghost" className="text-[#4c1d95] hover:bg-[#f5f0ff]">
+          {/* <Button asChild variant="ghost" className="text-[#4c1d95] hover:bg-[#f5f0ff]">
             <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" /> Back to Tiny Box
             </Link>
-          </Button>
+          </Button> */}
+          <h1 className="text-3xl font-semibold text-[#4c1d95]">
+            <CloudDownload className="inline-block h-6 w-6" /> Tiny FS
+          </h1>
           <span className="text-xs text-[#6b21a8]">
             Shared {new Date(resolvedShare.created_at).toLocaleString()}
           </span>

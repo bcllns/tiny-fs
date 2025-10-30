@@ -316,7 +316,7 @@ export const ShareDialog = ({
                                     }
                                   });
                                 }}
-                                disabled={isSendingCurrent}
+                                disabled={isSendingCurrent || !share.share_email}
                               >
                                 {isSendingCurrent ? (
                                   <Loader2 className="h-4 w-4 animate-spin" />

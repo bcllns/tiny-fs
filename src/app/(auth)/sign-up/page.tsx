@@ -6,7 +6,7 @@ import { SignUpForm } from "@/components/auth/sign-up-form";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
-  title: "Create account | Tiny Box",
+  title: "Create account | Tiny FS",
 };
 
 type SignUpPageProps = {
@@ -29,7 +29,7 @@ export default async function SignUpPage({ searchParams }: SignUpPageProps) {
     <main className="flex min-h-screen items-center justify-center bg-white px-4 py-12">
       <div className="w-full max-w-md space-y-6 rounded-2xl border border-[#e2d9ff] bg-white p-8 shadow-sm">
         <div className="space-y-2 text-center">
-          <h1 className="text-2xl font-semibold text-[#4c1d95]">Create your Tiny Box account</h1>
+          <h1 className="text-2xl font-semibold text-[#4c1d95]">Create your Tiny FS account</h1>
           <p className="text-sm text-[#6b21a8]">
             Enter your details to get access. We&apos;ll send a confirmation email so you can activate your account.
           </p>

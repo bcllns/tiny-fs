@@ -5,6 +5,7 @@ import { SignOutButton } from "@/components/auth/sign-out-button";
 import { FileUploader } from "@/components/dashboard/file-uploader";
 import { FilesTable, type FileRecord } from "@/components/dashboard/files-table";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { CloudDownload } from "lucide-react";
 
 import {
   uploadFileAction,
@@ -78,7 +79,9 @@ export default async function DashboardPage() {
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-10">
         <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
-            <h1 className="text-3xl font-semibold text-[#4c1d95]">Tiny FS</h1>
+            <h1 className="text-3xl font-semibold text-[#4c1d95]">
+              <CloudDownload className="inline-block h-6 w-6" /> Tiny FS
+            </h1>
             <p className="text-sm text-[#6b21a8]">
               Store, manage, and share files simpy and securely.
             </p>
