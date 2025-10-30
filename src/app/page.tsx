@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -8,6 +9,15 @@ export default async function Home() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  //if the user is logged in, redirect to dashboard
+  if (user) {
+    redirect("/dashboard");
+  }
+
+  redirect("/sign-up");
+
+  //if they are not logged in - taking them to the Sign Up page
 
   return (
     <main className="min-h-screen bg-white">

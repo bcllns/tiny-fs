@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Download } from "lucide-react";
+import { Download } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { formatBytes } from "@/lib/format";
